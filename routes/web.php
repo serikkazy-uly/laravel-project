@@ -31,7 +31,7 @@ Route::post('/store', function(Request $request){
     // dd($image->isValid());
     // dd(storage_path());
 
-    dd($image->store('uploads'));
+    dd($image->storeAs('uploads', 'image.jpg'));
     // dd(storage_path());
     // dd($request->all('image'));
     // var_dump(123);
