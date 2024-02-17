@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ImageService
 {
@@ -12,5 +13,49 @@ class ImageService
         $images = DB::table('images')->select('*')->get();
         $myImages = $images->all();
         return $myImages;
+    }
+
+    public function add($image)
+    {
+        $filename = $image->store('uploads');
+        DB::table('images')->insert(
+            ['image' => $filename]
+        );
+    }
+
+    public function show($id)
+    {
+        $image = DB::table('images')
+            ->select('*')
+            ->where('id', $id)
+            ->first();
+        return $image;
+    }
+
+    public function update($id, $newImage)
+    {
+        $image = DB::table('images')
+            ->select('*')
+            ->where('id', $id)
+            ->first();
+
+        Storage::delete($image->image);
+
+        $filename = $newImage->store('uploads');
+
+        DB::table('images')
+            ->where('id', $id)
+            ->update(['image' => $filename]);
+    }
+
+
+    public function delete($id)
+    {
+        $image = $this->show($id); // set show method cause same 
+        Storage::delete($image->image);
+
+        DB::table('images')
+            ->where('id', $id)
+            ->delete();
     }
 }
