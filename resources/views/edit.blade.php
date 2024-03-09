@@ -11,7 +11,7 @@
                 <div class="form-control">
                     <input type="file" name="image">
                 </div>
-                <button type="submit" class="btn btn-warning">Edit</button>
+                    <button type="submit" class="btn btn-warning">Edit</button>
             </form>
         </div>
     </div>
